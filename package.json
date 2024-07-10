@@ -1,0 +1,11 @@
+{
+  "name": "gamer-room-reserves",
+  "version": "1.0.0",
+  "description": "Web page to reserve screens in UBA's gamer room",
+  "main": "client/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
