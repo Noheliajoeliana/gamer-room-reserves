@@ -4,8 +4,18 @@
   "description": "Web page to reserve screens in UBA's gamer room",
   "main": "client/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon --env-file .env src/"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
 }

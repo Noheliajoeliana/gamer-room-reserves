@@ -1,2 +1,2 @@
-# gamer-room-reserves
-Web page to reserve screen in UBA's gamer room
+# Gamer Room Reservations API
+API to manage reservation of screens in UBA's gamer room
