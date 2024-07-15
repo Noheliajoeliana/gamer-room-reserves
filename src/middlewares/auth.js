@@ -20,7 +20,7 @@ module.exports = async function authMiddleware(req, res, next) {
   const { aud } = payload;
 
   const user = await Users.findOne({ _id: new ObjectId(aud) }, { fullName: 1, _id: 1 }).catch(e => e);
-  if (!user || (user instanceof Error)) return res.status(404).json({ error: 'User not found.' });
+  if (!user || (user instanceof Error)) return res.status(404).json({ error: 'Not authenticated' });
 
   req.params.user = user;
   next();
