@@ -4,10 +4,7 @@ const Reservations = require('./reservation.model');
 
 
 function mongooseConnection() {
-  mongoose.connect(process.env.MONGO_CONNECTION, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  });
+  mongoose.connect(process.env.MONGO_CONNECTION);
 }
 
 module.exports = { Users, Reservations, mongooseConnection };
