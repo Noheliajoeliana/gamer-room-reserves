@@ -16,7 +16,7 @@ module.exports = async function login(req, res) {
   const accessToken = await jwt.sign({ aud: existentUser._id }, process.env.SECRET, { expiresIn: '1h' });
 
   try {
-    res.status(201).json({ accessToken });
+    res.status(201).json({ accessToken, user: existentUser._id });
   } catch (error) {
     res.status(500).json({ error: 'Not possible to create user, please try again.' });
   }
