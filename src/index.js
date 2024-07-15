@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const { mongooseConnection } = require('./models');
 const {
   registerUser,
@@ -12,6 +13,7 @@ const authMiddleware = require('./middlewares/auth');
 const port = process.env.PORT;
 
 const app = express();
+app.use(cors({ origin: '*' }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
