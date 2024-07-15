@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Users = require('./user.model');
-const Reservation = require('./reservation.model');
+const Reservations = require('./reservation.model');
 
 
 function mongooseConnection() {
@@ -10,4 +10,4 @@ function mongooseConnection() {
   });
 }
 
-module.exports = { Users, Reservation, mongooseConnection };
+module.exports = { Users, Reservations, mongooseConnection };
