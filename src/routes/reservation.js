@@ -17,8 +17,7 @@ async function getReservations(req, res) {
 
 async function postReservation(req, res) {
     const { startDate, endDate, screen, startWeek, endWeek } = req.body;
-    const id = req.query.user;
-    const name = req.query.username;
+    const { _id: userId, fullName } = req.params;
 
     if (!startDate || !endDate || !validateDates([startDate, endDate])) return res.status(400).json({ error: 'Invalid dates.' });
     if (!screen || typeof screen !== 'number' || screen < 1 || screen > 6) return res.status(400).send({ error: 'Invalid screen, please send a number between 1 and 6.' });
@@ -32,8 +31,8 @@ async function postReservation(req, res) {
         startWeek,
         endWeek,
         endDate,
-        user: id,
-        title: name,
+        user: userId,
+        title: fullName,
         screen
     });
 
@@ -45,8 +44,21 @@ async function postReservation(req, res) {
     }
 }
 
+async function removeReservation(req, res) {
+    const reservation = req.params.id;
+    const { _id: id } = req.params.user;
+
+    const existentAndCorrect = await Reservations.findOne({ user: id, _id: reservation }).catch(e => e);
+    if (!existentAndCorrect || (existentAndCorrect instanceof Error)) return res.status(401).json({ error: 'You can\'t delete this reservation.' });
+
+    const result = await Reservations.findByIdAndDelete(reservation).catch(e => e);
+    if (result instanceof Error) return res.status(422).json({ error: 'Not possible to delete event, please try again.' });
+
+    return res.status(202).json({ message: 'Reservation successfully deleted.' });
+}
 
 module.exports = {
     getReservations,
-    postReservation
+    postReservation,
+    removeReservation
 }
