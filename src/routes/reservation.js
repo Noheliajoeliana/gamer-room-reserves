@@ -17,7 +17,7 @@ async function getReservations(req, res) {
 
 async function postReservation(req, res) {
     const { startDate, endDate, screen, startWeek, endWeek } = req.body;
-    const { _id: userId, fullName } = req.params;
+    const { _id: userId, fullName } = req.params.user;
 
     if (!startDate || !endDate || !validateDates([startDate, endDate])) return res.status(400).json({ error: 'Invalid dates.' });
     if (!screen || typeof screen !== 'number' || screen < 1 || screen > 6) return res.status(400).send({ error: 'Invalid screen, please send a number between 1 and 6.' });
