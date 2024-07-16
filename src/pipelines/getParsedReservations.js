@@ -18,7 +18,8 @@ const $project =  {
   id: '$_id',
   _id: 0,
   startWeek: 1,
-  endWeek: 1
+  endWeek: 1,
+  user: 1
 }
 
 const groupByHour = {
