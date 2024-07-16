@@ -9,6 +9,8 @@ module.exports = async function login(req, res) {
   if (!password || !document) return res.status(400).json({ error: 'Contraseña y cédula requeridos.' });
 
   const existentUser = await Users.findOne({ document }, { password: 1 }).catch(e => e);
+  if (!existentUser || (existentUser instanceof Error) || !('password' in existentUser)) return res.status(404).json({ error: 'Usuario no encontrado.' });
+
   const compareUser = await bcrypt.compare(password, existentUser.password);
 
   if (!compareUser) return res.status(401).json({ error: 'Credenciales inválidas.' });
