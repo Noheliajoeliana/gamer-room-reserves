@@ -19,12 +19,12 @@ async function postReservation(req, res) {
     const { startDate, endDate, screen, startWeek, endWeek } = req.body;
     const { _id: userId, fullName } = req.params.user;
 
-    if (!startDate || !endDate || !validateDates([startDate, endDate])) return res.status(400).json({ error: 'Invalid dates.' });
-    if (!screen || typeof screen !== 'number' || screen < 1 || screen > 6) return res.status(400).send({ error: 'Invalid screen, please send a number between 1 and 6.' });
+    if (!startDate || !endDate || !validateDates([startDate, endDate])) return res.status(400).json({ error: 'Fechas inválidas.' });
+    if (!screen || typeof screen !== 'number' || screen < 1 || screen > 6) return res.status(400).send({ error: 'Pantalla inválida, por favor envía un número entre 1 y 6.' });
     if (new Date(endDate) - new Date(startDate) !== 3.6e6) return res.status(400).send({ error: 'Reservations must be of 1 hour.' });
 
     const existentReservation = await Reservations.find({ startDate, screen }).catch(e => e);
-    if (existentReservation && (existentReservation instanceof Error || existentReservation.length > 0)) return res.status(409).json({ error: 'Reservation already exists.' });
+    if (existentReservation && (existentReservation instanceof Error || existentReservation.length > 0)) return res.status(409).json({ error: 'La reservación ya existe.' });
 
     const reservation = new Reservations({
         startDate,
@@ -38,9 +38,9 @@ async function postReservation(req, res) {
 
     try {
         await reservation.save();
-        return res.status(201).json({ message: 'Reservation created.' });
+        return res.status(201).json({ message: 'Reserva creada.' });
     } catch(error) {
-        return res.status(500).json({ error: 'Not possible to create reservation, please try again.' });
+        return res.status(500).json({ error: 'No fue posible crear la reserva, por favor intente nuevamente.' });
     }
 }
 
@@ -49,12 +49,12 @@ async function removeReservation(req, res) {
     const { _id: id } = req.params.user;
 
     const existentAndCorrect = await Reservations.findOne({ user: id, _id: reservation }).catch(e => e);
-    if (!existentAndCorrect || (existentAndCorrect instanceof Error)) return res.status(401).json({ error: 'You can\'t delete this reservation.' });
+    if (!existentAndCorrect || (existentAndCorrect instanceof Error)) return res.status(401).json({ error: 'No tienes permitido borrar esta reserva.' });
 
     const result = await Reservations.findByIdAndDelete(reservation).catch(e => e);
-    if (result instanceof Error) return res.status(422).json({ error: 'Not possible to delete event, please try again.' });
+    if (result instanceof Error) return res.status(422).json({ error: 'No fue posible borrar el evento, por favor intente nuevamente.' });
 
-    return res.status(202).json({ message: 'Reservation successfully deleted.' });
+    return res.status(202).json({ message: 'La reserva de eliminó correctamente.' });
 }
 
 module.exports = {

@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 
 mongooseConnection();
 
-app.get('/', (req, res) => res.json({ message: 'Welcome to UBA\'s reservation system.' }))
+app.get('/', (req, res) => res.json({ message: 'Bienvenido al sistema de reservas UBA.' }))
 
 app.post('/register', registerUser);
 app.post('/login', login);
