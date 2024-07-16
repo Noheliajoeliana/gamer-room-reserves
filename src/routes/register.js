@@ -8,7 +8,7 @@ module.exports = async function registerUsers(req, res) {
   if (!fullName || !document || !password || !career) return res.status(400).json({ error: 'Fields required: fullName, document, password and career.' })
 
   const userAlreadyExists = await Users.findOne({ document }).catch(e => e);
-  if (userAlreadyExists) return res.status(409).json({ message: 'User already exists.' });
+  if (userAlreadyExists) return res.status(409).json({ error: 'User already exists.' });
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
